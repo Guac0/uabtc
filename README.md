@@ -1,0 +1,1 @@
+Unconventional Automation for Blue Team Competitions Mentorship Group
