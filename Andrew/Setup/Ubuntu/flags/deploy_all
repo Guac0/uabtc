@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Run the first flag deployment script
+echo "Running /flags/deploy_flags_named_timestomped"
+sudo /flags/deploy_flags_named_timestomped
+
+echo "Running /flags/deploy_flags_named_nontimestomped"
+sudo /flags/deploy_flags_named_nontimestomped
+
+echo "Running /flags/deploy_flags_random_timestomped"
+sudo /flags/deploy_flags_random_timestomped
+
+echo "Running /flags/deploy_flags_random_nontimestomped"
+sudo /flags/deploy_flags_random_nontimestomped
+
+
+

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+LOG_FILE="/flags_named_nontimestomped"
+
+# Function to generate a random word
+random_word() {
+    shuf -n1 /usr/share/dict/words 2>/dev/null || echo "random"
+}
+
+# Function to generate a random timestamp between 2015 and 2025
+random_timestamp() {
+    START_EPOCH=$(date -d "2015-01-01 00:00:00" +%s)
+    END_EPOCH=$(date -d "2025-12-31 23:59:59" +%s)
+    RAND_EPOCH=$((START_EPOCH + RANDOM % (END_EPOCH - START_EPOCH)))
+    date -d "@$RAND_EPOCH" "+%Y%m%d%H%M.%S"
+}
+
+# Function to find a truly random directory (excluding some critical system paths)
+random_directory() {
+    find / -type d ! -path "/proc/*" ! -path "/sys/*" ! -path "/dev/*" ! -path "/run/*" ! -path "/snap/*" 2>/dev/null | shuf -n1
+}
+
+# Clear log file if it exists
+sudo rm -f "$LOG_FILE"
+sudo touch "$LOG_FILE"
+
+# Create 10 files with random names, locations, and timestamps
+for i in {1..10}; do
+    FILE_NAME="$(random_word)-$(random_word)-$(random_word)"
+    TARGET_DIR=$(random_directory)
+    FILE_PATH="$TARGET_DIR/$FILE_NAME"
+
+    # Create the file
+    sudo touch "$FILE_PATH"
+    
+    # Apply a random timestamp
+    #TIMESTAMP=$(random_timestamp)
+    #sudo touch -t "$TIMESTAMP" "$FILE_PATH"
+
+    # Log the details
+    echo "Created: $FILE_PATH | Timestamp: $TIMESTAMP" | sudo tee -a "$LOG_FILE"
+done
+
