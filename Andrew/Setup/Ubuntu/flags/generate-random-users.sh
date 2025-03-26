@@ -32,3 +32,23 @@ for i in {1..20}; do
     fi
 done
 
+# Define users
+users=("goon1" "goon2" "hacker")
+admins=("buyer" "lockpick" "safecracker")
+
+# Create standard users
+for user in "${users[@]}"; do
+    sudo useradd -m -s /bin/bash "$user"
+    echo "$user:P@ssw0rd123" | sudo chpasswd
+    echo "User $user created."
+done
+
+# Create admin users
+for admin in "${admins[@]}"; do
+    sudo useradd -m -s /bin/bash "$admin"
+    echo "$admin:Adm!nP@ssw0rd" | sudo chpasswd
+    sudo usermod -aG sudo "$admin"
+    echo "Admin $admin created and added to sudo group."
+done
+
+echo "Users and admins have been created successfully."
