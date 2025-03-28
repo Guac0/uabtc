@@ -41,7 +41,7 @@ exclude_from_lock () {
         local temp_users=()
         for user in "${users_to_lock[@]}"
         do
-                if [[ "${excluded_from_lock[*]}" == *"$user"* ]]; then
+                if [[ "${excluded_from_lock[@]}" =~ "$user" ]]; then
                         echo "Removing user from lock list: $user"
                 else
                         temp_users+=("$user")
@@ -54,7 +54,7 @@ exclude_from_pw_change () {
         local temp_users=()
         for user in "${pw_users[@]}"
         do
-                if [[ "${excluded_pw_users[*]}" == *"$user"* ]]; then
+                if [[ "${excluded_pw_users[@]}" =~ "$user" ]]; then
                         echo "Removing user from password change list: $user"
                 else
                         temp_users+=("$user")
@@ -110,3 +110,4 @@ confirm_changes
 
 change_passwords "$password"
 lock_users
+
