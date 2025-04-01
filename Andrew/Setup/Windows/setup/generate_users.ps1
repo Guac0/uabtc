@@ -18,7 +18,8 @@ for ($i = 1; $i -le 20; $i++) {
 
     # Create the user
     New-LocalUser -Name $userName -Password (ConvertTo-SecureString -AsPlainText $password -Force) -FullName $userName -Description "Random User"
-
+    Enable-LocalUser -Name $userName
+    
     # Optionally, add the user to the "Users" group
     Add-LocalGroupMember -Group "Users" -Member $userName
 
