@@ -2,6 +2,7 @@
 
 $userpass = Read-Host "Enter user password" -AsSecureString
 New-LocalUser -Name "Me" -Password $userpass
+Enable-LocalUser -Name "Me"
 net localgroup Administrators Me /add
 if (Get-CimInstance -Class Win32_OperatingSystem -Filter 'ProductType = "2"') {
     Add-ADGroupMember -Identity "Domain Admins" -Members "Me"
