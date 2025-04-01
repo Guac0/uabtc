@@ -18,6 +18,7 @@ for ($i = 1; $i -le 20; $i++) {
 
     # Create the user
     New-LocalUser -Name $userName -Password (ConvertTo-SecureString -AsPlainText $password -Force) -FullName $userName -Description "Random User"
+    Enable-LocalUser -Name $userName
 
     # Optionally, add the user to the "Users" group
     Add-LocalGroupMember -Group "Users" -Member $userName
@@ -35,12 +36,14 @@ $admins = @("buyer", "lockpick", "safecracker")
 foreach ($user in $users) {
     New-LocalUser -Name $user -Password (ConvertTo-SecureString "P@ssw0rd123" -AsPlainText -Force) -FullName $user -Description "Standard User"
     Add-LocalGroupMember -Group "Users" -Member $user
+    Enable-LocalUser -Name $user
 }
 
 # Add admin users
 foreach ($admin in $admins) {
     New-LocalUser -Name $admin -Password (ConvertTo-SecureString "Adm!nP@ssw0rd" -AsPlainText -Force) -FullName $admin -Description "Administrator"
     Add-LocalGroupMember -Group "Administrators" -Member $admin
+    Enable-LocalUser -Name $admin
 }
 
 Write-Host "Users and admins have been created successfully."
