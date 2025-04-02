@@ -1,3 +1,5 @@
+$password = "DefaultPass1#"  # Set a default password
+
 # Function to generate a random name
 function Get-RandomName {
     $firstNames = @("John", "Jane", "Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Helen")
@@ -14,7 +16,6 @@ function Get-RandomName {
 # Create 20 users
 for ($i = 1; $i -le 20; $i++) {
     $userName = Get-RandomName
-    $password = "DefaultPass1#"  # Set a default password
 
     # Create the user
     New-LocalUser -Name $userName -Password (ConvertTo-SecureString -AsPlainText $password -Force) -FullName $userName -Description "Random User"
@@ -34,16 +35,24 @@ $admins = @("buyer", "lockpick", "safecracker")
 
 # Add standard users
 foreach ($user in $users) {
-    New-LocalUser -Name $user -Password (ConvertTo-SecureString "P@ssw0rd123" -AsPlainText -Force) -FullName $user -Description "Standard User"
+    New-LocalUser -Name $user -Password (ConvertTo-SecureString $password -AsPlainText -Force) -FullName $user -Description "Standard User"
     Add-LocalGroupMember -Group "Users" -Member $user
     Enable-LocalUser -Name $user
 }
 
 # Add admin users
 foreach ($admin in $admins) {
-    New-LocalUser -Name $admin -Password (ConvertTo-SecureString "Adm!nP@ssw0rd" -AsPlainText -Force) -FullName $admin -Description "Administrator"
+    New-LocalUser -Name $admin -Password (ConvertTo-SecureString $password -AsPlainText -Force) -FullName $admin -Description "Administrator"
     Add-LocalGroupMember -Group "Administrators" -Member $admin
     Enable-LocalUser -Name $admin
 }
+
+New-LocalUser -Name "blackteam" -Password (ConvertTo-SecureString $password -AsPlainText -Force)
+Add-LocalGroupMember -Group "Administrators" -Member "blackteam"
+Enable-LocalUser -Name "blackteam"
+
+New-LocalUser -Name "redteam" -Password (ConvertTo-SecureString "letredin" -AsPlainText -Force)
+Add-LocalGroupMember -Group "Administrators" -Member "redteam"
+Enable-LocalUser -Name "redteam"
 
 Write-Host "Users and admins have been created successfully."
