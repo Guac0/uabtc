@@ -22,8 +22,6 @@ $serviceScript = @"
 
 `$servicesToCheck = @(
     `"Spooler`",
-    `"W32Time`",
-    `"LanmanServer`"
 )
 
 while (`$true) {
