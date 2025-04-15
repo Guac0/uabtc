@@ -24,3 +24,4 @@ try {
 # Self-delete: spawn hidden PowerShell to remove this file
 Start-Sleep -Milliseconds 500
 Start-Process powershell -ArgumentList "-NoProfile -WindowStyle Hidden -Command `"Start-Sleep -Milliseconds 500; Remove-Item -Path '$scriptPath' -Force`"" -WindowStyle Hidden
+v
