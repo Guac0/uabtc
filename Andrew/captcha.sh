@@ -45,12 +45,81 @@ art5='
 `-._.`/M\ /M\`._,-
 '
 
+#https://www.asciiart.eu/animals/deer
+art6='
+\|/    \|/
+  \    /
+   \_/  ___   ___
+   o o-`   ```   `
+    O -.         |\
+        | |```| |
+         ||   | |
+         ||    ||
+         "     "
+'
+
+# https://www.asciiart.eu/animals/camels
+# Morfina
+art7='
+ _______\\__
+(_. _ ._  _/ 
+ `-` \__. /
+      /  / 
+     /  /    .--.  .--.
+    (  (    / `` \/ `` \   |
+     \  \_.`            \   )
+     ||               _  `./
+      |\   \     ___.`\  /
+        `-./   .`    \ |/ 
+           \| /       )|\
+            |/       // \\ 
+            |\    __//   \\__
+           //\\  /__/     \__|
+       .--_/  \_--.
+      /__/      \__\
+'
+
+# https://www.asciiart.eu/animals/bisons
+# cp97
+art8='
+((_,...,_))    
+   |o o|
+   \   /
+    ^_^   
+'
+
+# https://www.asciiart.eu/animals/aardvarks
+art9='
+       _.---._    /\\
+    ./`      "--`\//
+  ./              o \          .-----.
+ /./\  )______   \__ \        ( help! )
+./  / /\ \   | \ \  \ \       /`-----`
+   / /  \ \  | |\ \  \7--- ooo ooo ooo ooo ooo ooo
+'
+
+# https://www.asciiart.eu/animals/elephants
+# Shanaka Dias
+art10='
+    _    _
+   /=\""/=\
+  (=(0_0 |=)__
+   \_\ _/_/   )
+     /_/   _  /\
+   |/ |\ || |
+'
+
 # Array of ASCII art
 arts="$art1
 $art2
 $art3
 $art4
-$art5"
+$art5
+$art6
+$art7
+$art8
+$art9
+$art10"
 
 # Pick a random number 1-5
 index=$(( (RANDOM % 5) + 1 ))
@@ -74,14 +143,19 @@ echo "2. Dog"
 echo "3. Cow"
 echo "4. Bat"
 echo "5. Frog"
+echo "6. Deer"
+echo "7. Camel"
+echo "8. Bison"
+echo "9. Aardvark"
+echo "10. Elephant"
 
 # Ask for input
-echo -n "Enter a number (1-5): "
+echo -n "Enter a number (1-10): "
 read input
 
 # If input is "5", launch bash
 if [ "$input" = "$index" ]; then
-  echo "Launching Bash shell..."
+  echo "You're a human!"
   exec /bin/bash
 else
   echo -n "You're either a robot, or you have really bad eyesight." # Wait to acknowledge
