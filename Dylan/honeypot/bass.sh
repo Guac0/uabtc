@@ -2,6 +2,13 @@
 
 trap 'printf "SIGINT caught! Use 'exit' to leave.\n$(whoami)@$(hostname):$(pwd)\$ "' SIGINT
 
+# For testing... Allows exit
+exit_real() {
+  if [[ "${args[0]}" == "nuh" && "${args[1]}" == "uh" ]]; then
+    exit 0
+  fi
+}
+
 ls() {
   if [[ "${args[0]}" == "ls" ]]; then
     for ((i = 1; i < ${#args[@]}; i++)); do
@@ -22,6 +29,7 @@ exit_fake() {
 while true; do
   read -ra args -p "$(whoami)@$(hostname):$(pwd)\$ "
   echo "${args[@]}" >>bass.log
+  exit_real
   ls
   exit_fake
 done
