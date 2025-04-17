@@ -1,11 +1,10 @@
 #!/bin/bash
 
 while true; do
-  if [[ "$1" == "ls" ]]; then
-    shift 1
-    args="$@"
-    for arg in $args; do
-      echo "ls: cannot access '$arg': No such file or directory"
+  read -ra args -p "$(whoami)@$(hostname):$(pwd)\$ "
+  if [[ "${args[0]}" == "ls" ]]; then
+    for ((i = 1; i < ${#args[@]}; i++)); do
+      echo "ls: cannot access '${args[i]}': No such file or directory"
     done
   fi
 done
